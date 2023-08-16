@@ -1,46 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu PWA Simples</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
+    <title>Mensagens PWA</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
-    <header>
-        <h1>Meu PWA</h1>
-    </header>
-    <main>
-        <p>Bem-vindo ao meu Progressive Web App simples!</p>
+    <h1>Aplicativo de Mensagens PWA</h1>
 
-        <section>
-            <h2>Adicione uma Mensagem</h2>
-            <form id="message-form">
-                <textarea id="message-input"></textarea>
-                <br>
-                <button type="submit">Enviar</button>
-            </form>
-        </section>
+    
 
-        <section>
-            <h2>Mensagens</h2>
-            <ul id="messages-list"></ul>
-        </section>
-    </main>
+    <form id="message-form">
+        <input type="text" id="message-input" placeholder="Digite sua mensagem" required>
+        <button type="submit">Enviar</button>
+    </form>
 
+    <h3>Mensagens</h3>
+    <ul id="messages"></ul>
+
+    <script src="./database.js"></script>
+    <script src="./app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js').then(function(registration) {
-                    console.log('ServiceWorker registrado com sucesso:', registration);
-                }, function(error) {
-                    console.log('Registro do ServiceWorker falhou:', error);
+                navigator.serviceWorker.register('./sw.js').then(function(registration) {
+                    console.log('ServiceWorker registrado com sucesso no escopo: ', registration.scope);
+                }, function(err) {
+                    console.error('Registro do ServiceWorker falhou: ', err);
                 });
             });
         }
     </script>
-    <script src="database.js"></script>
-    <script src="app.js"></script>
 </body>
+
 </html>

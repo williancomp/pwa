@@ -1,11 +1,9 @@
-const DB_NAME = 'pwa-messages-db';
+const DB_NAME = 'messageDB';
 const DB_VERSION = 1;
 const DB_STORE_NAME = 'messages';
+let db = null;
 
-let db;
-
-
-function initDB(callback) {  // Adicionar um callback
+function initDB(callback) {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onerror = function(event) {
@@ -23,31 +21,32 @@ function initDB(callback) {  // Adicionar um callback
     };
 }
 
-
-// Função para adicionar uma mensagem ao IndexedDB
 function addMessage(message) {
+    if (!db) {
+        console.error("Database hasn't been initialized.");
+        return;
+    }
+
     const transaction = db.transaction([DB_STORE_NAME], 'readwrite');
     const store = transaction.objectStore(DB_STORE_NAME);
-    store.add({ text: message });
+    store.add({ content: message });
 }
 
-// Função para obter todas as mensagens do IndexedDB
 function getAllMessages(callback) {
+    if (!db) {
+        console.error("Database hasn't been initialized.");
+        return;
+    }
+
     const transaction = db.transaction([DB_STORE_NAME], 'readonly');
     const store = transaction.objectStore(DB_STORE_NAME);
-    
-    const request = store.openCursor();
-    const messages = [];
+    const request = store.getAll();
 
     request.onsuccess = function(event) {
-        const cursor = event.target.result;
-        if (cursor) {
-            messages.push(cursor.value);
-            cursor.continue();
-        } else {
-            callback(messages);
-        }
+        callback(event.target.result);
+    };
+
+    request.onerror = function(event) {
+        console.error('Erro ao obter mensagens', event);
     };
 }
-
-initDB( );

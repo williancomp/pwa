@@ -1,28 +1,26 @@
-initDB(displayMessages);
-
-document.getElementById('message-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const messageInput = document.getElementById('message-input');
-    addMessage(messageInput.value);
-
-    messageInput.value = ''; // limpar o campo
-
-    displayMessages(); // atualizar a lista de mensagens
-});
-
 function displayMessages() {
-    const messagesList = document.getElementById('messages-list');
-    messagesList.innerHTML = ''; // Limpar mensagens antigas
-
     getAllMessages(function(messages) {
-        messages.forEach(message => {
+        const messageList = document.getElementById('messages');
+        messageList.innerHTML = '';
+        
+        messages.forEach(msg => {
             const listItem = document.createElement('li');
-            listItem.textContent = message.text;
-            messagesList.appendChild(listItem);
+            listItem.textContent = msg.content;
+            messageList.appendChild(listItem);
         });
     });
 }
 
-// Exibir mensagens iniciais
-displayMessages();
+initDB(displayMessages);  // Iniciar o DB e depois exibir as mensagens
+
+document.getElementById('message-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const messageInput = document.getElementById('message-input');
+    
+    if (messageInput.value.trim() === '') return;
+    
+    addMessage(messageInput.value);
+    displayMessages();
+    
+    messageInput.value = '';  // Reset the input
+});
