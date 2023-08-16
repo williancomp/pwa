@@ -1,3 +1,5 @@
+initDB(displayMessages);
+
 document.getElementById('message-form').addEventListener('submit', function(event) {
     event.preventDefault();
 

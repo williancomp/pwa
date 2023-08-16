@@ -4,8 +4,8 @@ const DB_STORE_NAME = 'messages';
 
 let db;
 
-// Inicialização do IndexedDB
-function initDB() {
+
+function initDB(callback) {  // Adicionar um callback
     const request = indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onerror = function(event) {
@@ -14,6 +14,7 @@ function initDB() {
 
     request.onsuccess = function(event) {
         db = event.target.result;
+        callback();  // Chamar o callback após a inicialização bem-sucedida
     };
 
     request.onupgradeneeded = function(event) {
@@ -21,6 +22,7 @@ function initDB() {
         db.createObjectStore(DB_STORE_NAME, { autoIncrement: true });
     };
 }
+
 
 // Função para adicionar uma mensagem ao IndexedDB
 function addMessage(message) {
@@ -48,4 +50,4 @@ function getAllMessages(callback) {
     };
 }
 
-initDB();
+initDB( );
