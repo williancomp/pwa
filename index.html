@@ -13,6 +13,19 @@
     </header>
     <main>
         <p>Bem-vindo ao meu Progressive Web App simples!</p>
+
+        <section>
+            <h2>Adicione uma Mensagem</h2>
+            <form id="message-form">
+                <textarea id="message-input"></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Mensagens</h2>
+            <ul id="messages-list"></ul>
+        </section>
     </main>
 
     <script>
@@ -26,5 +39,7 @@
             });
         }
     </script>
+    <script src="database.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
