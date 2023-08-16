@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu PWA Simples</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header>
+        <h1>Meu PWA</h1>
+    </header>
+    <main>
+        <p>Bem-vindo ao meu Progressive Web App simples!</p>
+    </main>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').then(function(registration) {
+                    console.log('ServiceWorker registrado com sucesso:', registration);
+                }, function(error) {
+                    console.log('Registro do ServiceWorker falhou:', error);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
