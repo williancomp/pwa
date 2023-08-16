@@ -34,6 +34,10 @@ ul li {
     border-radius: 4px;
 }
 
+main {
+    padding-inline: 10vw;
+}
+
 form {
     display: flex;
     flex-direction: column;
